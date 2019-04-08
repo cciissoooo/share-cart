@@ -4,8 +4,52 @@ import Pokeball from '../pokeball.png'
 import { connect } from 'react-redux'
 
 class Home extends Component {
-  render(){
-    console.log(this.props);
+  constructor(props) {
+    super(props);
+    this.state = {newEvent: null};
+  }
+
+  handleClick = () => {
+    console.log('button clicked');
+    this.setState({
+      newEvent: {
+        id: 0,
+        title: 'New Event'
+      }
+    });
+  };
+
+  handleSubmit(event) {
+    console.log(event.target);
+    console.log('An essay was submitted: ' + this.state.newEvent);
+    event.preventDefault();
+  }
+
+  newEvent() {
+    if (this.state.newEvent) {
+      return (
+        <form onSubmit={this.handleSubmit}>
+          <label>
+            Description:
+            <textarea value={this.state.newEvent.body} onChange={this.handleChange} />
+          </label>
+          <input type="submit" value="Submit" />
+        </form>
+      );
+    }
+  }
+  addEvent() {
+    return (
+    <div className= "center">
+      <button className = "btn purple lighten-3" onClick={this.handleClick}>
+        Add Event
+      </button>
+    </div>
+    )
+  };
+  render() {
+    console.log('in render', this.props, this.state);
+
     const { posts } = this.props
     const postList = posts.length ? (
       posts.map(post => {
@@ -28,8 +72,11 @@ class Home extends Component {
     return (
       <div>
         <div className="container home">
-          <h4 className="center">Home</h4>
+          {this.newEvent()}
+          {this.addEvent()}
+          {/* <h4 className="center">Home</h4> */}
           {postList}
+          
         </div>
       </div>
     )
