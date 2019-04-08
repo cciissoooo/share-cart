@@ -15,9 +15,17 @@ class Post extends Component {
       <div className="post">
         <h4 className="center">{this.props.post.title}</h4>
         <p>{this.props.post.body}</p>
+        <div className= "userinfo">
+          <form>
+            <label>
+              Name:
+              <input type="text" name="name" />
+            </label>
+          </form>
+        </div>
         <div className= "center">
           <button className = "btn grey" onClick={this.handleClick}>
-            Delete Post
+            Register
           </button>
           </div>
       </div>
