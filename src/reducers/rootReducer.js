@@ -18,6 +18,13 @@ const rootReducer = (state = initState, action) => {
       posts: newPosts
     }
   }
+  else if (action.type === 'ADD_POST'){
+    state.posts.push({
+      id: action.id,
+      title: action.title,
+      body: action.body
+    })
+  }
   return state;
 }
 

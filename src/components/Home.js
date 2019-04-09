@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import Pokeball from '../pokeball.png'
 import { connect } from 'react-redux'
+import { addPost } from '../actions/postActions'
 
 class Home extends Component {
   constructor(props) {
@@ -14,7 +15,7 @@ class Home extends Component {
     this.setState({
       newEvent: {
         id: 0,
-        title: 'New Event'
+        title: 'New Event',
       }
     });
   };
@@ -22,6 +23,7 @@ class Home extends Component {
   handleSubmit(event) {
     console.log(event.target);
     console.log('An essay was submitted: ' + this.state.newEvent);
+    this.props.addPost(this.newEvent.id, this.newEvent.title, this.newEvent.body);
     event.preventDefault();
   }
 
@@ -31,7 +33,7 @@ class Home extends Component {
         <form onSubmit={this.handleSubmit}>
           <label>
             Description:
-            <textarea value={this.state.newEvent.body} onChange={this.handleChange} />
+            <textarea type={this.state.newEvent.body} onChange={this.handleChange} />
           </label>
           <input type="submit" value="Submit" />
         </form>
@@ -88,5 +90,12 @@ const mapStateToProps = (state) => {
     posts: state.posts
   }
 }
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addPost: (id, title, body) => {
+      dispatch(addPost(id, title, body))
+    }
+  }
+}
 
-export default connect(mapStateToProps)(Home)
+export default connect(mapStateToProps, mapDispatchToProps)(Home)
