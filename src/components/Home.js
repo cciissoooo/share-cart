@@ -11,7 +11,6 @@ class Home extends Component {
   }
 
   handleClick = () => {
-    console.log('button clicked');
     this.setState({
       newEvent: {
         id: 0,
@@ -20,11 +19,15 @@ class Home extends Component {
     });
   };
 
-  handleSubmit(event) {
-    console.log(event.target);
-    console.log('An essay was submitted: ' + this.state.newEvent);
-    this.props.addPost(this.newEvent.id, this.newEvent.title, this.newEvent.body);
+  handleSubmit = (event) => {
+    this.props.addPost(this.state.newEvent.id, this.state.newEvent.title, this.state.newEvent.body);
     event.preventDefault();
+    this.props.history.push('/');
+    this.state.newEvent = null;
+  }
+
+  handleDescriptionChange = (event) => {
+    this.state.newEvent.body = event.target.value;
   }
 
   newEvent() {
@@ -33,7 +36,7 @@ class Home extends Component {
         <form onSubmit={this.handleSubmit}>
           <label>
             Description:
-            <textarea type={this.state.newEvent.body} onChange={this.handleChange} />
+            <textarea type={this.state.newEvent.body} onChange={this.handleDescriptionChange} />
           </label>
           <input type="submit" value="Submit" />
         </form>
@@ -78,7 +81,6 @@ class Home extends Component {
           {this.addEvent()}
           {/* <h4 className="center">Home</h4> */}
           {postList}
-          
         </div>
       </div>
     )
